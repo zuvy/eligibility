@@ -1,0 +1,13 @@
+[
+    ~[tlist_sql;
+        SELECT ul.id, ul.el_date, ul.el_time, ul.el_grade
+        from u_eligibility ul
+        order by ul.el_date
+    ]
+        {
+            "id" : "~(ul.id)",
+            "date" : "~(ul.el_date)",
+            "time" : "~(ul.el_time)"
+        },
+    [/tlist_sql]{}
+    ]

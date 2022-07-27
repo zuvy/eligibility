@@ -1,0 +1,12 @@
+[
+    ~[tlist_sql;
+        SELECT ul.id, substr(ul.el_grade, 2, length(ul.el_grade) - 3)
+        from u_eligibility ul
+        where ul.id = ~(gpv.param)
+    ]
+        { "id" : "~(ul.id)" },
+        
+              ~(ul.el_grade)
+        }
+    [/tlist_sql]
+    ]

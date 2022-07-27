@@ -1,0 +1,39 @@
+[
+    ~[tlist_sql;
+        select distinct cs.course_number, cs.course_name, s.dcid, pg.grade, s.grade_level, pg.percent, cc.expression, s.student_number, s.lastfirst, t.lastfirst
+        from
+        students s
+        join pgfinalgrades pg on s.id = pg.studentid
+        join sections se on pg.sectionid = se.id
+        join courses cs on se.course_number = cs.course_number
+        join teachers t on se.teacher = t.id
+        join cc on se.id = cc.sectionid
+        ~[if#sel.~(gpv.g_num)=59]
+        inner join (select max(cc.dateenrolled) dateenrolled, cc.studentid from cc group by cc.studentid)
+        where s.schoolid = ~(gpv.s_num)
+        ~[/if#sel]
+        ~[if#gl.~(gpv.g_num)!=59]
+        where s.schoolid = ~(gpv.s_num)
+        and s.grade_level = ~(gpv.g_num)
+        ~[/if#gl]
+        and s.enroll_status = 0
+        and pg.grade = 'F'
+        and se.termid >= 100 * (substr(extract(year from add_months(sysdate, -6)), -2) + 10)
+        and pg.finalgradename = 'S2'
+        order by
+        s.grade_level, s.lastfirst, cc.expression
+    ]
+        {
+            "c_number" : "~(cs.course_number)",
+            "course" : "~(cs.course_name)",
+            "dcid" : "~(s.dcid)",
+            "grade" : "~(pg.grade)",
+            "grade_level" : "~(s.grade_level)",
+            "percent" : "~(pg.percent)",
+            "period" : "~(cc.expression)",
+            "s_number" : "~(s.student_number)",
+            "student" : "~(s.lastfirst)",
+            "teacher" : "~(t.lastfirst)"
+        },
+    [/tlist_sql]{}
+    ]

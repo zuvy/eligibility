@@ -1,0 +1,20 @@
+[
+    ~[tlist_sql;
+        select s.dcid, s.lastfirst, s.student_number, s.grade_level
+        from students s
+        ~[if.~(gpv.gl)=59]
+        INNER JOIN ~[temp.table.current.selection:students] stusel ON stusel.dcid = s.dcid
+        where s.schoolid = ~(gpv.site)
+        [else]
+        where s.schoolid = ~(gpv.site)
+        and s.grade_level = ~(gpv.gl)
+        [/if]
+    ]
+        {
+            "dcid" : "~(s.dcid)",
+            "student" : "~(s.lastfirst)",
+            "s_number" : "~(s.student_number)",
+            "grade_level" : "~(s.grade_level)"
+        },
+    [/tlist_sql]{}
+    ]

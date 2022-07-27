@@ -1,0 +1,74 @@
+<!--
+TemplateName:Admin
+-->
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Secondary Eligibility Report</title>
+<!-- required scripts -->
+	~[wc:commonscripts] 
+<!-- Required style sheets: screen.css, and print.css --> 
+	<link href="/images/css/screen.css" rel="stylesheet" media="screen">
+	<link href="/images/css/print.css" rel="stylesheet" media="print">
+	
+    <style>
+    [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+      display: none !important;
+      }
+    </style>
+
+</head> 
+<body> 
+	~[wc:admin_header_css] 
+     <div id="breadcrumbs"> 
+ <!-- breadcrumb start --><a href="/admin/home.html" target="_top">Start Page</a> &gt; <a href="/admin/reports/runreports.html" target="_top">Report Works</a> &gt; <a href="/admin/0_reports/eligibility/eli_setup.html" target="_top">Eligibility Setup</a> &gt; Secondary Eligibility Report<!-- breadcrumb end -->  
+ </div> 
+<!-- start of main menu and content --> 
+	~[wc:admin_navigation_css] 
+<!-- Start of Page --> 
+<div class="box-round" ng-cloak class="ng-cloak">
+	<div><h1 style="text-align:center">Secondary Eligibility Report</h1></div>
+<!-- start of content area --> 
+<ul class="tabs">  
+    <li class="selected">  
+        <a href="sec_eli_list.html">Student List</a>
+    </li>
+    <li> 
+        <a href="eli_process.html?gl=~(gpv.gl)&site=~(gpv.site)">Process Grades</a>
+    </li>
+    <li>
+        <a href="#">Eligibility Status</a>
+    </li>
+</ul>
+    <div id="main_content" data-require-path="components/eligibility/index" data-module-name="eliAppModule" data-ng-controller="listAppCtrl"
+        ng-site='~(gpv.site)' ng-grade='~(gpv.gl)'>
+        
+        <table class="grid">
+            <thead>
+                <tr>
+                    <th>Course</th><th>Teacher</th><th>Period</th><th>Student</th><th>Number</th><th>Grade Level</th><th>Grade</th><th>Percent</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="row in listData">
+                    <td>{{row.course}}</td><td>{{row.teacher}}</td><td>{{row.period}}</td><td>{{row.student}}</td><td>{{row.s_number}}</td><td>{{row.grade_level}}</td><td>{{row.grade}}</td><td>{{row.percent}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <form id="p_form" action="" method="POST">
+                <input id="data_submit" type="hidden" name="[U_ELIGIBILITY]EL_GRADE" value="" />
+                <input id="el_date" type="hidden" name="[U_ELIGIBILITY]EL_DATE" value="" />
+                <input id="el_time" type="hidden" name="[U_ELIGIBILITY]EL_TIME" value="" />
+                
+            	<input name="ac" type="hidden" value="prim"/>
+            	~[submitbutton]
+        </form>
+    </div>
+</div>
+       
+
+	
+<!-- end of content area --> 
+	~[wc:admin_footer_css] 
+</body> 
+</html>

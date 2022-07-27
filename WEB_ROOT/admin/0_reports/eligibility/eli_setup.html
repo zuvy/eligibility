@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <title>Set Eligibility Report Parameters</title>
+<!-- required scripts -->
+ ~[wc:commonscripts] 
+<!-- Required style sheets: screen.css, and print.css --> 
+ <link href="/images/css/screen.css" rel="stylesheet" media="screen">
+ <link href="/images/css/print.css" rel="stylesheet" media="print">
+ <script>
+    $j(document).ready(function(){
+        var site = "~(curschoolid)";
+        
+        //display if accessed at district site
+        var d_body = `
+            <tr>
+                <td>This report can only be run at a secondary site.</td>
+            </tr>`;
+        
+        var hs_body = `
+            <tr>
+                <td>
+                    <label>Select Grade Level</label>
+                </td>
+                <td>
+                    <select id="grades">
+                        <option value="59">Current Selection</option>
+                        <option value="12">12th Grade</option>
+                        <option value="11">11th Grade</option>
+                        <option value="10">10th Grade</option>
+                        <option value="9">9th Grade</option>
+                    </select>
+                </td>`;
+    
+        ems_body = `
+            <tr>
+                <td>
+                    <label>Select Grade Level</label>
+                </td>
+                <td>
+                    <select id="grades">
+                        <option value="59">Current Selection</option>
+                        <option value="8">8th Grade</option>
+                    </select>
+                </td>
+            </tr>`;
+        
+        wms_body = `
+            <tr>
+                <td>
+                    <label>Select Grade Level</label>
+                </td>
+                <td>
+                    <select id="grades">
+                        <option value="59">Current Selection</option>
+                        <option value="6">6th Grade</option>
+                        <option value="7">7th Grade</option>
+                    </select>
+                </td>
+            </tr>`;
+    if(site == 0){
+        $j('#select tbody').html(d_body);
+    }
+    else if(site > 700 && site < 800) {
+        $j('#select tbody').append(hs_body);
+    }
+    else if(site == 515) {
+        $j('#select tbody').append(ems_body);
+    }
+    else if(site == 505) {
+        $j('#select tbody').append(wms_body);
+    }
+    });
+    function set_param(){
+        if("~(curschoolid)" > 0){
+            var grade = $j('#grades').val()
+            var school = "~(curschoolid)";
+        }
+        else {
+            var term = $j('#terms').val();
+            var school = $j("#site_num").val();
+        }
+        document.getElementById("site_form").action="/admin/0_reports/eligibility/sec_eli_list.html?site=" + school + "&gl=" + grade
+    }
+ </script>
+</head> 
+<body onSubmit="set_param()"> 
+ ~[wc:admin_header_css] 
+ <div id="breadcrumbs"> 
+ <!-- breadcrumb start --><a href="/admin/home.html" target="_top">Start Page</a> &gt; <a href="/admin/reports/runreports.html" target="_top">Report Works</a> &gt; <a href="/admin/0_reports/eligibility/eli_setup.html" target="_top">Eligibility Setup</a> &gt;Secondary Eligibility Report<!-- breadcrumb end --> 
+ </div> 
+<!-- start of main menu and content --> 
+ ~[wc:admin_navigation_css] 
+<!-- Start of Page --> 
+ <h1>Select Eligibility Parameters</h1> 
+<!-- start of content area --> 
+<div class="box-round">
+<form id="site_form" action="" method="POST">
+    <div>
+        <table class="linkDescList" id="select">
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div> 
+ <div class="button-row">
+                <input type="hidden" name="ac" value="prim">~[submitbutton]</div>
+        </div>
+</form>
+<!-- end of content area --> 
+ ~[wc:admin_footer_css] 
+</body> 
+</html>

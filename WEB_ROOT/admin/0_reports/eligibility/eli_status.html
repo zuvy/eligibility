@@ -1,0 +1,86 @@
+<!--
+TemplateName:Admin
+-->
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Secondary Eligibility Report</title>
+<!-- required scripts -->
+	~[wc:commonscripts] 
+<!-- Required style sheets: screen.css, and print.css --> 
+	<link href="/images/css/screen.css" rel="stylesheet" media="screen">
+	<link href="/images/css/print.css" rel="stylesheet" media="print">
+	
+    <style>
+    [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+      display: none !important;
+      }
+    .red{
+        color: red;
+    }
+    
+    .orange{
+        color: orange;   
+    }
+    
+    .green{
+        color: green;
+    }
+    </style>
+
+</head> 
+<body> 
+	~[wc:admin_header_css] 
+     <div id="breadcrumbs"> 
+ <!-- breadcrumb start --><a href="/admin/home.html" target="_top">Start Page</a> &gt; <a href="/admin/reports/runreports.html" target="_top">Report Works</a> &gt; <a href="/admin/0_reports/eligibility/eli_setup.html" target="_top">Eligibility Setup</a> &gt; Secondary Eligibility Report<!-- breadcrumb end --> 
+ </div> 
+<!-- start of main menu and content --> 
+	~[wc:admin_navigation_css] 
+<!-- Start of Page --> 
+<div class="box-round" ng-cloak class="ng-cloak">
+	<div><h1 style="text-align:center">Secondary Eligibility Report</h1></div>
+<!-- start of content area --> 
+<ul class="tabs">  
+    <li>  
+        <a href="sec_eli_list.html">Student List</a>
+    </li>
+    <li> 
+         <a href="eli_process.html?site=~(gpv.site)">Process Grades</a>
+    </li>
+    <li class="selected">
+        <a href="#">Eligibility Status</a>
+    </li>
+</ul>
+    <div id="main_content" data-require-path="components/eligibility/index" data-module-name="eliAppModule" data-ng-controller="eliAppCtrl"  ng-p1="~(gpv.p1)" ng-p2="~(gpv.p2)" ng-site="~(gpv.site)" ng-gl="~(gpv.gl)">
+        
+        {{~(gpv.s_num)}} {{~(gpv.g_num)}}
+        
+        <table class="grid">
+            <thead>
+                <tr>
+                    <th>Student Number</th><th>Name</th><th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="row in stat_arr">
+                    <td>{{row.num}}</td><td>{{row.name}}</td><td ng-class=row.color>{{row.status}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <form action="/~[self.page]" method="POST">
+                <input id="data_submit" type="hidden" name="[U_ELIGIBILITY]EL_GRADE1" value="" />
+                <input id="el_date" type="hidden" name="[U_ELIGIBILITY]EL_DATE1" value="" />
+                <input id="el_time" type="hidden" name="[U_ELIGIBILITY]EL_TIME1" value="" />
+                
+            	<input name="ac" type="hidden" value="prim"/>
+            	~[submitbutton]
+        </form>
+    </div>
+</div>
+       
+
+	
+<!-- end of content area --> 
+	~[wc:admin_footer_css] 
+</body> 
+</html>

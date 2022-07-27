@@ -1,0 +1,10 @@
+<script>
+    var no_setup = `<tr>
+                <td><a href="../0_reports/eligibility/eli_setup.html">New Secondary Eligibility Report</a></td>
+                <td>List students eligibility status with list available on a tabbed page</td>
+                </tr>`;
+    
+    
+
+        $j("td:contains('~[text:psx.html.admin_reports.runreports.section_readiness_description]')").closest("tr").after(no_setup);
+</script>

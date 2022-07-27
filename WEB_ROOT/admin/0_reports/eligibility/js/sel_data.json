@@ -1,0 +1,34 @@
+[
+    ~[tlist_sql;
+        select distinct cs.course_name, t.lastfirst, cc.expression, s.lastfirst, s.dcid, s.student_number, s.grade_level, pg.grade, pg.percent
+        from
+        students s
+        join pgfinalgrades pg on s.id = pg.studentid
+        join sections se on pg.sectionid = se.id
+        join courses cs on se.course_number = cs.course_number
+        join teachers t on se.teacher = t.id
+        join cc on se.id = cc.sectionid
+        inner join (select max(cc.dateenrolled) dateenrolled, cc.studentid from cc group by cc.studentid) s2
+        on s.id = cc.studentid
+        INNER JOIN ~[temp.table.current.selection:students] stusel ON stusel.dcid = s.dcid
+        where s.enroll_status = 0
+        and pg.grade = 'F'
+        --and se.termid >= 100 * (substr(extract(year from add_months(sysdate, -6)), -2) + 10)
+        and se.termid >= 3100
+        and pg.finalgradename = 'S2'
+        order by
+        s.grade_level, s.lastfirst, cc.expression
+    ]
+        {
+            "course" : "~(cs.course_name)",
+            "teacher" : "~(t.lastfirst)",
+            "period" : "~(cc.expression)",
+            "student" : "~(s.lastfirst)",
+            "dcid" : "~(s.dcid)",
+            "s_number" : "~(s.student_number)",
+            "grade_level" : "~(s.grade_level)",
+            "grade" : "~(pg.grade)",
+            "percent" : "~(pg.percent)"
+        },
+    [/tlist_sql]{}
+    ]

@@ -1,0 +1,28 @@
+<form action="./eli_process.html?s_num=~(gpv.site)" method="POST">
+
+    ~[tlist_sql;
+    select ul.id, ul.el_date, ul.el_time, ul.el_grade_s
+    from u_eligibility ul
+    where ul.id = ~[gpv:ID];
+    order by ul.id
+    ]
+    <table>
+        <thead>
+            <tr>
+                <th>Record</th><th>Date:Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>~(ul.id)</td><td>~(ul.date):~(ul.time)</td>
+            </tr>
+        </tbody>
+    </table>
+    [/tlist_sql]
+    
+    <label>Clicking submit will delete the selected record</label>
+        <input type="hidden" name="DD-U_ELIGIBILITY.ID:~(gpv.ID)" value="1">
+        
+        <div class="button-row"><input type="hidden" name="ac" value="prim">~[submitbutton]</div>
+        </div>
+    </form>
